@@ -10,7 +10,13 @@ import (
 var ctx = context.Background()
 var redis_hash = "simco:resources"
 
-func redis_client() {
+/*
+func rdb_do(rdb Redis) {
+    val, err := rdb.Do()
+}
+*/
+
+func redis_client() (rdb *redis.Client) {
     uri := os.Getenv("SIMCO_REDIS_URI")
     token := os.Getenv("SIMCO_REDIS_TOKEN")
     connection_str := "redis://" + ":" + token + "@" +  uri
@@ -20,8 +26,8 @@ func redis_client() {
         panic(err)
     }
     
-    rdb := redis.NewClient(opt)
-    fmt.Println(rdb)
+    redis_db := redis.NewClient(opt)
+    fmt.Println(redis_db)
 
     /*
     val, err := rdb.Get(ctx, "key").Result()
@@ -30,12 +36,18 @@ func redis_client() {
     }
     fmt.Println("V: ", val)
     */
+    return redis_db
 }
 
 func main() {
     start := time.Now()
     fmt.Println("start: ", start)
-    redis_client()
+
+    rdb := redis_client()
+    fmt.Println("DEBUG: ", rdb)
+    val := rdb.Do(ctx, "keys", "*")
+    fmt.Println("DEBUG: ", val)
+
     end := time.Now()
     fmt.Println("end: ", end)
 }
