@@ -1,7 +1,4 @@
 #!/bin/bash
 redis_url="redis://$SIMCO_REDIS_TOKEN@$SIMCO_REDIS_URI"
 export REDISCLI_AUTH=$SIMCO_REDIS_TOKEN
-#redis-cli -a $SIMCO_REDIS_TOKEN -u "redis://$SIMCO_REDIS_URI"
-#echo $redis_url
-#redis-cli -u "$redis_url"
-#redis-cli -h redis-10827.c8.us-east-1-4.ec2.cloud.redislabs.com -p 10827 -a "$SICO_REDIS_TOKEN"
+redis-cli -u "$redis_url"

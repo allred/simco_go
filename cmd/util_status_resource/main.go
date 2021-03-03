@@ -11,30 +11,24 @@ var ctx = context.Background()
 var redis_hash = "simco:resources"
 
 func redis_client() {
-    //token := os.Getenv("SIMCO_REDIS_TOKEN")
     uri := os.Getenv("SIMCO_REDIS_URI")
-    connection_str := "redis://" + uri
-    fmt.Println("DEBUG: ", connection_str)
-    //opt, err := redis.ParseURL("redis://")
-    opt, err := redis.ParseURL("redis://")
-    fmt.Println(opt, err)
-    /*
-    rdb := redis.NewClient(&redis.Options{
-        Addr:     "localhost:6379",
-        Password: "", // no password set
-        DB:       0,  // use default DB
-    })
-
-    err := rdb.Set(ctx, "key", "value", 0).Err()
+    token := os.Getenv("SIMCO_REDIS_TOKEN")
+    connection_str := "redis://" + ":" + token + "@" +  uri
+    //fmt.Println("DEBUG: ", connection_str)
+    opt, err := redis.ParseURL(connection_str)
     if err != nil {
         panic(err)
     }
+    
+    rdb := redis.NewClient(opt)
+    fmt.Println(rdb)
 
+    /*
     val, err := rdb.Get(ctx, "key").Result()
     if err != nil {
         panic(err)
     }
-    fmt.Println("key", val)
+    fmt.Println("V: ", val)
     */
 }
 
