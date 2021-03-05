@@ -12,3 +12,6 @@ build:
 
 run:
 	./bin/util_status_resource
+
+test:
+	go test
